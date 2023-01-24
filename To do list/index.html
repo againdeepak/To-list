@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To do </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        .todo{
+            color:white;
+            font-family: cursive;
+            font-weight: 700;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg success bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand todo "  >Start Today's Journey </a>
+                <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> -->
+                
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container mt-5 col-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Today's List" aria-label="Recipient's username"
+                    aria-describedby="button-addon2">
+                <button id="add_btn" class="btn btn-outline-success" type="button" id="button-addon2">Add</button>
+            </div>
+            <ul id="parentList" class="list-group ">
+                <li class="list-group-item d-flex justify-content-between">
+                    <h3 class="flex-grow-1">Start Day</h3>
+                    <button class="btn btn-success mx-3"onclick="editChp(this)">Edit</button>
+                    <button class="btn btn-primary" onclick="removeChp(this)">Remove</button>
+                </li>
+            </ul>
+        </div>
+
+    </main>
+    <script>
+        let addBtn = document.getElementById('add_btn');
+        addBtn.addEventListener('click', addChapter)
+        let parentList = document.getElementById('parentList');
+
+        function addChapter(e) {
+            if (parentList.children[0].className == "Msg") {
+                parentList.children[0].remove();
+            }
+            let currentBtn = e.currentTarget;
+            let currnetInput = currentBtn.previousElementSibling;
+            let chpName = currnetInput.value
+            let newLi = document.createElement('li')
+            // newLi.classList.add('list-group-item');
+            newLi.className = "list-group-item d-flex justify-content-between"
+            newLi.innerHTML = ` <h3 class="flex-grow-1">${chpName}</h3>
+                    <button class="btn btn-success mx-3">Edit</button> 
+                    <button class="btn btn-primary "onclick="removeChp(this)">Remove</button>`
+            parentList.appendChild(newLi);
+        }
+        function removeChp(currElement) {
+            currElement.parentElement.remove()
+            if (parentList.children.length <= 0) {
+                let newEmptyMsg = document.createElement("h3");
+                newEmptyMsg.classList.add("Msg");
+                newEmptyMsg.textContent = "you forget to add list..."
+                parentList.appendChild(newEmptyMsg);
+            }
+        }
+        function editChp(currElement){
+            if(currElement.textContent=="Done"){
+                currElement.textContent="Edit";
+                let currChpName=currElement.previousElementSibling.value
+                let currHeading=document.createElement('h3');
+                currHeading.className="flex-grow-1"
+                currHeading.textContent=currChpName
+                currElement.parentElement.replaceChild(currh,currElement.previousElementSibling)
+
+            }
+            else{
+                currElement.textContent="Done";
+            let currChpName=currElement.previousElementSibling.textContent
+            let currInput=document.createElement('input');
+            currInput.type="text"
+            currInput.placeholder="Chapter Name"
+            currInput.className="form-control"
+            currInput.value=currChpName;
+            currElement.parentElement.replaceChild(currInput,currElement.previousElementSibling)
+            }
+            
+
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
